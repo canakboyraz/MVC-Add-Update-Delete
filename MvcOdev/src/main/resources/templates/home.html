@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="tr" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Site Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container">
+
+    <div th:replace="inc/navbar"> </div>
+
+    <th:block th:if="${status != null}">
+        <th:block th:if="${ status == 0 }">
+            <div class="alert alert-info alert-dismissible fade show" role="alert">
+                <strong>HATALI İŞLEM !</strong> <span th:text="${message}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </th:block>
+        <th:block th:if="${ status > 0 }">
+            <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                <strong>İşlem Başarılı</strong> <span th:text="${message}"></span>
+                <th:block th:each="item : ${users}">
+                    <th:block th:if="${item.deleteUser == 1}">
+                        <a th:href="${'/revoke/'+item.uid}" role="button" class="btn btn-warning btn-sm">GERİ AL</a>
+                    </th:block>
+                </th:block>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </th:block>
+    </th:block>
+
+    <div th:text="${'Total Count: ' + count}"> </div>
+
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">No</th>
+            <th scope="col">UID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Surname</th>
+            <th scope="col">Email</th>
+            <th scope="col">Date</th>
+            <th scope="col">Delete</th>
+            <th scope="col">İnfo</th>
+            <th scope="col">Update</th>
+        </tr>
+        </thead>
+        <tbody th:if="${users != null}">
+
+        <tr th:each="item, iter : ${users}">
+            <th:block th:if="${item.deleteUser == 0}">
+                <th scope="row" th:text="${iter.count}"></th>
+                <th scope="row" th:text="${item.uid}"></th>
+                <td th:text="${item.name}"></td>
+                <td th:text="${item.surname}"></td>
+                <td th:text="${item.email}"></td>
+                <td th:text="${item.date}"></td>
+                <td>
+                    <a th:href="${'/userDelete/'+item.uid}" role="button" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+                <td>
+                    <a th:href="${'/userInfo/'+item.uid}" role="button" class="btn btn-info btn-sm">İnfo</a>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" th:attr="data-bs-target='#customerModal'+${item.uid }">
+                        Update
+                    </button>
+                    <!-- Modal -->
+                    <div class="modal fade" th:id="${'customerModal'+item.uid}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel" th:text="${item.name + ' ' + item.surname}" ></h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+
+                                <div class="model-body">
+                                    <form action="/userUpdate" method="post">
+                                    <div class="mb-3">
+                                        <input readonly th:value="${item.uid}" name="uid" class="form-control" />
+                                    </div>
+                                    <div class="mb-3">
+                                        <input th:value="${item.name}" name="name" class="form-control" />
+                                    </div>
+                                    <div class="mb-3">
+                                        <input th:value="${item.surname}" name="surname" class="form-control" />
+                                    </div>
+                                    <div class="mb-3">
+                                        <input type="email" th:value="${item.email}" name="email" class="form-control" />
+                                    </div>
+                                    <div class="mb-3">
+                                        <input th:value="${item.password}" name="password" class="form-control" />
+                                    </div>
+                                    <div class="mb-3">
+                                        <input type="number" th:value="${item.age}" name="age" class="form-control" />
+                                    </div>
+                                        <button type="submit" class="btn btn-primary">Update</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Modal -->
+
+
+                </td>
+            </th:block>
+
+        </tr>
+
+        </tbody>
+    </table>
+
+    <nav aria-label="...">
+        <ul class="pagination">
+            <th:block th:each= "i : ${#numbers.sequence(1, page)}" >
+                <li class="page-item" th:classappend="${i == p ? 'active' : ''}"><a class="page-link" th:href="${'/?p=' + i}" th:text="${i}">1</a></li>
+            </th:block>
+        </ul>
+    </nav>
+
+
+</div>
+</body>
+</html>
