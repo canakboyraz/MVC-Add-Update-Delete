@@ -3,25 +3,25 @@ Bu yapıda Java Spring MVC ve JDBC uygulamaları kullanılarak kullanıcının l
 
 # Yazılım Sürümleri
 
-Java 8
-Spring 2.17.3
-Mysql 8
+ - Java 8
+ - Spring 2.17.3
+ - Mysql 8
 
 # Uygulama Özellikleri
 
- Kullanıcı Giriş
- Kullanıcı Silme
- Kullanıcı Bilgi Ekranı
- Kullanıcı Bilgisi Güncelleme
- Kullanıcı Listeleme
- Kullanıcı Arama
- Kullanıcı Sayfalama
- Kullanıcı Sıralama
- Not Alma
- Not Silme
- Not Bilgisi Güncelleme
- Notları sayfalama
- Not Checkbox
+ - Kullanıcı Giriş
+ - Kullanıcı Silme
+ - Kullanıcı Bilgi Ekranı
+ - Kullanıcı Bilgisi Güncelleme
+ - Kullanıcı Listeleme
+ - Kullanıcı Arama
+ - Kullanıcı Sayfalama
+ - Kullanıcı Sıralama
+ - Not Alma
+ - Not Silme
+ - Not Bilgisi Güncelleme
+ - Notları sayfalama
+ - Not Checkbox
 
  # Ekran Görüntüleri
 
